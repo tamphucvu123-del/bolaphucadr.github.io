@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#060913">
+<title>ĐỘ NHẠY OB55 FF V5 - THANG ĐIỂM 200</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  font-family:'Segoe UI',system-ui,-apple-system,Roboto,'Helvetica Neue',sans-serif;
+  background:#060913;color:#e6f1ff;min-height:100vh;
+  padding:12px 12px 44px;
+  background-image:
+    radial-gradient(circle at 8% -5%, rgba(0,240,255,.16), transparent 42%),
+    radial-gradient(circle at 96% 8%, rgba(255,0,85,.15), transparent 42%),
+    radial-gradient(circle at 50% 105%, rgba(255,230,0,.08), transparent 52%);
+  background-attachment:fixed;overflow-x:hidden;
+}
+.app{max-width:450px;margin:0 auto}
+
+/* HEADER */
+.hd{text-align:center;padding:18px 6px 16px}
+.hd .badge{
+  display:inline-block;font-size:9.5px;letter-spacing:2px;font-weight:800;
+  color:#ffe600;border:1px solid rgba(255,230,0,.45);border-radius:20px;
+  padding:4px 12px;margin-bottom:10px;background:rgba(255,230,0,.07);
+  box-shadow:0 0 14px rgba(255,230,0,.25);
+}
+.hd h1{
+  font-size:16.5px;line-height:1.35;letter-spacing:.4px;margin:0;
+  font-weight:900;text-transform:uppercase;
+  background:linear-gradient(90deg,#00f0ff,#ffe600,#ff0055,#00f0ff);
+  background-size:300% 100%;
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 0 12px rgba(0,240,255,.5));
+  animation:shift 6s linear infinite;
+}
+@keyframes shift{to{background-position:300% 0}}
+.hd p{margin:8px 0 0;font-size:11px;color:#6f84a6;letter-spacing:1px;font-weight:600}
+
+/* CARD */
+.card{
+  background:linear-gradient(160deg, rgba(12,18,32,.96), rgba(7,11,21,.96));
+  border:1px solid rgba(0,240,255,.18);border-radius:16px;padding:14px;margin-bottom:13px;
+  box-shadow:0 8px 28px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.02) inset;
+  position:relative;
+}
+.lbl{
+  font-size:11.5px;letter-spacing:1.1px;text-transform:uppercase;color:#00f0ff;
+  font-weight:800;margin-bottom:11px;display:flex;align-items:center;gap:8px;
+}
+.lbl::before{
+  content:'';width:4px;height:15px;border-radius:2px;
+  background:linear-gradient(180deg,#00f0ff,#ff0055);box-shadow:0 0 10px #00f0ff;
+}
+.lbl .num{
+  margin-left:auto;font-size:9px;color:#54678a;letter-spacing:1px;
+  border:1px solid #1e2d47;padding:2px 7px;border-radius:6px;
+}
+
+/* OS */
+.os-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.os-btn{
+  padding:13px 8px;border-radius:12px;border:1.5px solid #1e2d47;
+  background:rgba(16,24,40,.85);color:#9fb3d1;font-weight:800;font-size:13.5px;
+  display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;
+  transition:.22s;font-family:inherit;
+}
+.os-btn .ic{font-size:19px;line-height:1}
+.os-btn.active{
+  border-color:#00f0ff;color:#fff;
+  background:linear-gradient(160deg, rgba(0,240,255,.20), rgba(0,240,255,.04));
+  box-shadow:0 0 18px rgba(0,240,255,.45);
+  text-shadow:0 0 10px rgba(0,240,255,.9);
+}
+
+/* SEARCH */
+.search-wrap{position:relative}
+.search-box{
+  display:flex;align-items:center;gap:9px;background:#0b1220;
+  border:1.5px solid #1e2d47;border-radius:12px;padding:0 12px;transition:.2s;
+}
+.search-box:focus-within{border-color:#00f0ff;box-shadow:0 0 16px rgba(0,240,255,.35)}
+.search-box .mg{font-size:15px;opacity:.65}
+.search-box input{
+  flex:1;background:none;border:0;outline:none;color:#e6f1ff;font-size:14.5px;
+  padding:13px 0;font-family:inherit;min-width:0;
+}
+.search-box input::placeholder{color:#4d5f7e;font-size:13.5px}
+
+.sugg{
+  position:absolute;left:0;right:0;top:calc(100% + 7px);background:#0b1220;
+  border:1px solid rgba(0,240,255,.32);border-radius:12px;max-height:245px;
+  overflow-y:auto;z-index:60;box-shadow:0 14px 40px rgba(0,0,0,.85);
+  display:none;-webkit-overflow-scrolling:touch;
+}
+.sugg.show{display:block}
+.sugg .item{
+  padding:11px 13px;font-size:13.5px;border-bottom:1px solid rgba(255,255,255,.05);
+  cursor:pointer;display:flex;justify-content:space-between;gap:8px;align-items:center;
+  transition:.15s;
+}
+.sugg .item:last-child{border-bottom:0}
+.sugg .item:active{background:rgba(0,240,255,.14)}
+.sugg .item .tag{
+  font-size:9.5px;padding:2px 7px;border-radius:6px;background:rgba(0,240,255,.12);
+  color:#00f0ff;font-weight:800;border:1px solid rgba(0,240,255,.28);flex-shrink:0;
+}
+.sugg .item.custom{
+  color:#ffe600;font-weight:800;background:rgba(255,230,0,.07);
+  border-top:1px solid rgba(255,230,0,.18);
+}
+.sugg .item.custom .tag{background:rgba(255,230,0,.14);color:#ffe600;border-color:rgba(255,230,0,.38)}
+
+.selected{
+  margin-top:10px;font-size:12px;padding:9px 12px;border-radius:10px;
+  border:1px dashed rgba(0,240,255,.4);background:rgba(0,240,255,.06);
+  color:#9fe9ff;display:none;align-items:center;gap:7px;font-weight:700;
+}
+.selected.show{display:flex}
+.selected b{color:#00f0ff}
+
+/* CHIPS */
+.chips{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.chip{
+  padding:12px 6px;border-radius:11px;border:1.5px solid #1e2d47;
+  background:rgba(16,24,40,.7);color:#9fb3d1;font-size:12.8px;font-weight:700;
+  text-align:center;cursor:pointer;transition:.2s;font-family:inherit;
+  display:flex;align-items:center;justify-content:center;gap:5px;
+}
+.chip:active{transform:scale(.97)}
+.chip.active{
+  border-color:#ff0055;color:#fff;
+  background:linear-gradient(160deg, rgba(255,0,85,.24), rgba(255,0,85,.05));
+  box-shadow:0 0 16px rgba(255,0,85,.5);
+  text-shadow:0 0 9px rgba(255,0,85,.9);
+}
+
+/* MAIN BTN */
+.main-btn{
+  width:100%;padding:17px;border:0;border-radius:14px;font-family:inherit;
+  font-size:14.5px;font-weight:900;letter-spacing:.7px;text-transform:uppercase;
+  color:#04121a;cursor:pointer;position:relative;overflow:hidden;
+  background:linear-gradient(90deg,#00f0ff,#00ffa3,#ffe600);
+  box-shadow:0 0 24px rgba(0,240,255,.5), 0 8px 22px rgba(0,0,0,.65);
+  transition:.18s;margin-top:2px;
+}
+.main-btn:active{transform:scale(.975)}
+.main-btn::after{
+  content:'';position:absolute;top:0;left:-60%;width:45%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.75),transparent);
+  transform:skewX(-22deg);animation:shine 2.8s infinite;pointer-events:none;
+}
+@keyframes shine{0%{left:-60%}55%{left:130%}100%{left:130%}}
+
+/* RESULTS */
+#results{display:none}
+#results.show{display:block;animation:fadeUp .45s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+
+.dev-head{
+  display:flex;justify-content:space-between;align-items:center;gap:10px;
+  padding-bottom:11px;margin-bottom:13px;border-bottom:1px dashed rgba(0,240,255,.25);
+}
+.dev-head .nm{font-size:14px;font-weight:900;color:#fff;line-height:1.3}
+.dev-head .nm small{display:block;font-size:10px;color:#6f84a6;font-weight:700;letter-spacing:.8px;margin-top:3px}
+.dev-head .os-pill{
+  font-size:10px;font-weight:900;padding:5px 11px;border-radius:20px;flex-shrink:0;
+  background:rgba(0,240,255,.13);color:#00f0ff;border:1px solid rgba(0,240,255,.4);
+  box-shadow:0 0 12px rgba(0,240,255,.3);
+}
+
+.sens{margin-bottom:12px}
+.sens .top{display:flex;justify-content:space-between;align-items:baseline;font-size:12.5px;margin-bottom:6px;color:#b9cbe6;font-weight:600}
+.sens .top b{color:#00f0ff;font-size:15px;text-shadow:0 0 10px rgba(0,240,255,.8);font-weight:900}
+.bar{height:8px;border-radius:6px;background:#101a2c;overflow:hidden;border:1px solid rgba(255,255,255,.05)}
+.bar i{
+  display:block;height:100%;border-radius:6px;width:0;
+  background:linear-gradient(90deg,#00f0ff,#ff0055);
+  box-shadow:0 0 10px rgba(0,240,255,.7);
+  transition:width .85s cubic-bezier(.2,.9,.3,1);
+}
+
+/* ============================================================
+   FIRE BUTTON CARD
+   ============================================================ */
+.fire-card-wrap{margin:20px 0 6px;position:relative}
+#results.show .fire-card-wrap{animation:firePop .7s cubic-bezier(.2,.9,.3,1.35) both}
+@keyframes firePop{
+  0%   { opacity:0; transform:scale(.72) translateY(24px); }
+  60%  { opacity:1; transform:scale(1.04) translateY(0); }
+  100% { opacity:1; transform:scale(1) translateY(0); }
+}
+
+.fire-card{
+  position:relative;padding:1.6px;border-radius:20px;
+  background:linear-gradient(135deg,#ff0055,#00f0ff,#ffe600,#ff0055);
+  background-size:300% 300%;
+  animation:borderFlow 5s linear infinite, neonPulse 2.4s ease-in-out infinite;
+  box-shadow:0 0 22px rgba(255,0,85,.45), 0 0 46px rgba(0,240,255,.25), 0 14px 34px rgba(0,0,0,.65);
+}
+@keyframes borderFlow{0%{background-position:0% 50%}100%{background-position:300% 50%}}
+@keyframes neonPulse{
+  0%,100%{box-shadow:0 0 22px rgba(255,0,85,.45),0 0 46px rgba(0,240,255,.25),0 14px 34px rgba(0,0,0,.65)}
+  50%{box-shadow:0 0 36px rgba(255,0,85,.75),0 0 70px rgba(0,240,255,.45),0 14px 34px rgba(0,0,0,.65)}
+}
+
+.fire-card-inner{
+  position:relative;background:linear-gradient(160deg, rgba(15,20,36,.97), rgba(6,10,20,.97));
+  border-radius:18.4px;padding:15px 14px 13px;
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  overflow:hidden;
+}
+.fire-card-inner::before{
+  content:'';position:absolute;inset:0;pointer-events:none;opacity:.55;
+  background-image:
+    linear-gradient(rgba(0,240,255,.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,240,255,.045) 1px, transparent 1px);
+  background-size:22px 22px;
+}
+.fire-card-inner::after{
+  content:'';position:absolute;left:0;right:0;height:2px;
+  background:linear-gradient(90deg, transparent, rgba(0,240,255,.6), transparent);
+  animation:scanline 3.2s linear infinite;pointer-events:none;opacity:.5;
+}
+@keyframes scanline{0%{top:-2px}100%{top:100%}}
+
+.fire-title{
+  font-size:10.5px;letter-spacing:1.8px;text-transform:uppercase;
+  color:#00f0ff;font-weight:900;margin-bottom:14px;
+  display:flex;align-items:center;gap:8px;
+  text-shadow:0 0 10px rgba(0,240,255,.6);
+  position:relative;z-index:1;
+}
+.fire-title-dot{
+  width:8px;height:8px;border-radius:50%;background:#ff0055;
+  box-shadow:0 0 10px #ff0055, 0 0 20px #ff0055;
+  animation:dotPulse 1.6s ease-in-out infinite;
+}
+@keyframes dotPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.4);opacity:.55}}
+
+/* ============ FIRE MAIN (HUD + SIZE) ============ */
+.fire-main{display:flex;gap:14px;align-items:center;position:relative;z-index:1}
+
+/* HUD CIRCLE */
+.hud{width:138px;height:138px;position:relative;flex-shrink:0}
+.hud-ring-a{
+  position:absolute;inset:0;border-radius:50%;
+  background:conic-gradient(from 0deg,
+    transparent 0deg, #ff0055 40deg, transparent 90deg,
+    transparent 180deg, #00f0ff 220deg, transparent 270deg, transparent 360deg);
+  -webkit-mask:radial-gradient(circle at center, transparent 82%, #000 83%);
+          mask:radial-gradient(circle at center, transparent 82%, #000 83%);
+  animation:spin 5s linear infinite;
+  filter:drop-shadow(0 0 6px rgba(255,0,85,.8)) drop-shadow(0 0 6px rgba(0,240,255,.6));
+}
+.hud-ring-b{
+  position:absolute;inset:14px;border-radius:50%;
+  border:1.5px dashed rgba(0,240,255,.55);
+  animation:spinRev 14s linear infinite;
+  box-shadow:inset 0 0 12px rgba(0,240,255,.18);
+}
+.hud-glow{
+  position:absolute;inset:20px;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle, rgba(255,0,85,.4), transparent 70%);
+  animation:glowPulse 2.4s ease-in-out infinite;
+}
+@keyframes glowPulse{0%,100%{opacity:.7;transform:scale(1)}50%{opacity:1;transform:scale(1.08)}}
+.hud-inner{
+  position:absolute;inset:26px;border-radius:50%;
+  background:radial-gradient(circle at 50% 35%, #1c0e1c 0%, #0a0510 70%, #050208 100%);
+  border:1.5px solid rgba(255,0,85,.6);
+  box-shadow:inset 0 0 24px rgba(255,0,85,.42), inset 0 2px 8px rgba(255,255,255,.06), 0 0 22px rgba(255,0,85,.32);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;
+}
+.hud-cross{position:absolute;inset:0;width:100%;height:100%;opacity:.55;animation:crossPulse 3s ease-in-out infinite;pointer-events:none}
+.hud-cross line{stroke:#00f0ff;stroke-width:2.2;stroke-linecap:round;filter:drop-shadow(0 0 3px #00f0ff)}
+@keyframes crossPulse{0%,100%{opacity:.5}50%{opacity:.95}}
+.hud-val{
+  font-family:'Orbitron','Arial Black',system-ui,sans-serif;
+  font-size:24px;font-weight:900;color:#ffe600;line-height:1;
+  text-shadow:0 0 8px rgba(255,230,0,.95), 0 0 18px rgba(255,230,0,.6), 0 0 32px rgba(255,180,0,.4);
+  letter-spacing:-.5px;position:relative;z-index:1;
+}
+.hud-unit{
+  font-family:'Orbitron','Segoe UI',sans-serif;
+  font-size:8px;font-weight:700;color:rgba(255,230,0,.75);
+  letter-spacing:3px;margin-top:3px;position:relative;z-index:1;
+}
+
+/* SIZE BLOCK */
+.size-block{
+  flex:1;min-width:0;padding:12px 13px;
+  background:rgba(16,24,40,.88);
+  border:1px solid rgba(0,240,255,.22);
+  border-radius:12px;position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;
+}
+.size-block::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:linear-gradient(180deg,#ffe600,#ff8800);
+  box-shadow:0 0 10px rgba(255,230,0,.75);
+}
+.size-lbl{
+  font-size:8.5px;letter-spacing:1.3px;color:#6f84a6;
+  font-weight:800;text-transform:uppercase;margin-bottom:4px;
+}
+.size-val{
+  font-family:'Orbitron',sans-serif;font-size:26px;font-weight:900;
+  color:#ffe600;line-height:1;text-shadow:0 0 10px rgba(255,230,0,.8);
+  margin-bottom:4px;
+}
+.size-qual{
+  font-size:10px;color:#00f0ff;font-weight:700;margin-bottom:6px;
+  text-shadow:0 0 8px rgba(0,240,255,.5);line-height:1.3;
+}
+.size-note{font-size:9px;color:#4d5f7e;font-weight:600;letter-spacing:.3px}
+
+/* ============================================================
+   VỊ TRÍ ĐẶT NÚT BẮN (CM) — FULL WIDTH CARD
+   ============================================================ */
+.pos-card{
+  margin-top:14px;padding:13px;border-radius:14px;
+  background:linear-gradient(160deg, rgba(30,15,25,.92), rgba(10,8,20,.92));
+  border:1px solid rgba(255,0,85,.3);
+  box-shadow:0 0 18px rgba(255,0,85,.18) inset, 0 6px 22px rgba(0,0,0,.45);
+  position:relative;z-index:1;overflow:hidden;
+}
+#results.show .pos-card{animation:posAppear .65s ease .2s both}
+@keyframes posAppear{
+  0%{opacity:0;transform:translateY(12px) scale(.95)}
+  100%{opacity:1;transform:translateY(0) scale(1)}
+}
+.pos-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg, transparent, #ff0055, #ffe600, #ff0055, transparent);
+  opacity:.75;
+}
+
+.pos-title{
+  font-size:10px;letter-spacing:1.6px;text-transform:uppercase;
+  color:#ff0055;font-weight:900;margin-bottom:12px;
+  display:flex;align-items:center;gap:7px;
+  text-shadow:0 0 10px rgba(255,0,85,.7);
+}
+.pos-title-icon{
+  font-size:14px;filter:drop-shadow(0 0 6px rgba(255,230,0,.8));
+}
+.pos-title-tag{
+  margin-left:auto;font-size:8.5px;padding:3px 9px;border-radius:20px;
+  background:rgba(255,0,85,.15);border:1px solid rgba(255,0,85,.45);
+  color:#ff9bb3;letter-spacing:.7px;font-weight:900;white-space:nowrap;
+}
+
+.pos-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+.pos-item{
+  background:rgba(20,10,20,.72);
+  border-radius:11px;padding:10px 11px 11px;
+  border:1px solid rgba(0,240,255,.22);
+  position:relative;overflow:hidden;
+}
+.pos-item::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+}
+.pos-item-bottom::before{
+  background:linear-gradient(90deg,#00f0ff,rgba(0,240,255,0));
+  box-shadow:0 0 10px rgba(0,240,255,.55);
+}
+.pos-item-right::before{
+  background:linear-gradient(90deg,#ffe600,rgba(255,230,0,0));
+  box-shadow:0 0 10px rgba(255,230,0,.55);
+}
+
+.pos-item-top{
+  display:flex;align-items:center;gap:6px;margin-bottom:6px;
+}
+.pos-item-icon{
+  font-size:13px;flex-shrink:0;
+  filter:drop-shadow(0 0 5px rgba(0,240,255,.7));
+}
+.pos-item-label{
+  font-size:8.5px;letter-spacing:1.1px;font-weight:900;
+  color:#8ca1bf;text-transform:uppercase;
+}
+
+.pos-item-val{
+  display:flex;align-items:baseline;gap:4px;margin-bottom:5px;
+  line-height:1;
+}
+.pos-num{
+  font-family:'Orbitron',sans-serif;font-size:28px;font-weight:900;
+  color:#ffe600;line-height:1;
+  text-shadow:0 0 10px rgba(255,230,0,.85), 0 0 22px rgba(255,230,0,.45);
+  letter-spacing:-1px;
+}
+.pos-unit{
+  font-family:'Orbitron',sans-serif;font-size:10px;font-weight:700;
+  color:rgba(255,230,0,.75);letter-spacing:1px;
+}
+.pos-item-sub{
+  font-size:9.5px;color:#7d90ad;font-weight:600;line-height:1.35;
+}
+
+/* MINI RULER VISUAL */
+.pos-ruler{
+  margin-top:11px;height:22px;border-radius:6px;position:relative;
+  background:linear-gradient(90deg,
+    #0a1826 0%, #0f2033 20%, #0a1826 40%,
+    #0f2033 60%, #0a1826 80%, #0f2033 100%);
+  border:1px solid rgba(0,240,255,.28);
+  overflow:hidden;display:flex;align-items:flex-end;
+  padding:0 2px;
+}
+.pos-ruler .tick{
+  flex:1;border-left:1px solid rgba(0,240,255,.5);
+  height:55%;position:relative;
+}
+.pos-ruler .tick.major{
+  border-left:1.5px solid #00f0ff;height:85%;
+  box-shadow:0 0 4px rgba(0,240,255,.6);
+}
+.pos-ruler .tick.major::after{
+  content:'';position:absolute;bottom:-3px;left:-2px;width:4px;height:4px;
+  border-radius:50%;background:#ffe600;box-shadow:0 0 6px #ffe600;
+}
+.pos-ruler-label{
+  position:absolute;top:2px;left:6px;font-size:7.5px;
+  color:#00f0ff;font-weight:900;letter-spacing:1px;
+  text-shadow:0 0 6px rgba(0,240,255,.7);
+}
+
+/* TIP */
+.pos-tip{
+  margin-top:11px;padding:9px 11px;border-radius:9px;
+  background:rgba(255,230,0,.06);border:1px dashed rgba(255,230,0,.32);
+  font-size:10.5px;color:#d4dff0;
+  display:flex;gap:8px;align-items:flex-start;line-height:1.45;font-weight:600;
+}
+.pos-tip-icon{
+  font-size:14px;flex-shrink:0;
+  filter:drop-shadow(0 0 5px rgba(255,230,0,.7));
+  animation:handWave 2.5s ease-in-out infinite;
+}
+@keyframes handWave{
+  0%,100%{transform:rotate(0deg)}
+  25%{transform:rotate(-8deg)}
+  75%{transform:rotate(8deg)}
+}
+.pos-tip b{color:#ffe600;font-weight:900}
+
+/* HINT */
+.fire-hint{
+  margin-top:12px;padding:9px 12px;border-radius:10px;
+  background:linear-gradient(90deg, rgba(255,230,0,.09), rgba(255,0,85,.06));
+  border:1px solid rgba(255,230,0,.24);
+  font-size:11px;color:#d4dff0;font-weight:600;
+  display:flex;align-items:center;gap:8px;line-height:1.4;
+  position:relative;z-index:1;
+}
+.fire-hint b{color:#ffe600;font-weight:900}
+.hint-arrow{
+  display:inline-block;font-size:13px;color:#ffe600;
+  filter:drop-shadow(0 0 6px rgba(255,230,0,.85));
+  animation:bounceArrow 1.6s ease-in-out infinite;flex-shrink:0;
+}
+@keyframes bounceArrow{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes spinRev{to{transform:rotate(-360deg)}}
+
+@media (max-width:380px){
+  .hud{width:116px;height:116px}
+  .hud-inner{inset:22px}
+  .hud-val{font-size:20px}
+  .hud-unit{font-size:7px;letter-spacing:2.5px}
+  .size-val{font-size:22px}
+  .pos-num{font-size:24px}
+  .fire-main{gap:11px}
+}
+
+/* INFO GRID */
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:16px}
+.info{
+  background:rgba(16,24,40,.8);border:1px solid rgba(0,240,255,.16);
+  border-radius:11px;padding:10px 11px;
+}
+.info .k{font-size:9.5px;color:#6f84a6;text-transform:uppercase;letter-spacing:.7px;font-weight:800;margin-bottom:5px}
+.info .v{font-size:13.5px;font-weight:900;color:#ffe600;text-shadow:0 0 10px rgba(255,230,0,.45)}
+
+.copy-btn{
+  width:100%;padding:14px;border-radius:12px;border:1.5px solid rgba(0,240,255,.55);
+  background:rgba(0,240,255,.08);color:#00f0ff;font-weight:900;font-size:13px;
+  font-family:inherit;letter-spacing:.7px;cursor:pointer;transition:.2s;
+  margin-top:14px;text-transform:uppercase;
+}
+.copy-btn:active{background:rgba(0,240,255,.22);transform:scale(.98)}
+
+.link{
+  display:block;text-align:center;margin-top:13px;color:#9fb3d1;font-size:12.5px;
+  cursor:pointer;font-weight:700;padding:8px;
+}
+.link span{border-bottom:1px dashed rgba(255,0,85,.75);padding-bottom:2px}
+.link:active{color:#ff0055}
+
+.foot{text-align:center;font-size:10px;color:#3f4f6b;margin-top:20px;line-height:1.7;letter-spacing:.3px}
+
+/* MODAL */
+.modal{
+  position:fixed;inset:0;background:rgba(3,6,14,.88);backdrop-filter:blur(6px);
+  display:none;align-items:center;justify-content:center;padding:18px;z-index:150;
+}
+.modal.show{display:flex}
+.modal-box{
+  max-width:420px;width:100%;max-height:82vh;overflow-y:auto;background:#0a1120;
+  border:1px solid rgba(0,240,255,.35);border-radius:16px;padding:18px;
+  box-shadow:0 0 46px rgba(0,240,255,.28);animation:fadeUp .3s ease;
+}
+.modal-box h3{
+  margin:0 0 14px;font-size:14px;color:#00f0ff;text-transform:uppercase;
+  letter-spacing:.8px;text-shadow:0 0 12px rgba(0,240,255,.6);
+}
+.modal-box p,.modal-box li{font-size:12.8px;line-height:1.75;color:#b9cbe6}
+.modal-box ul{padding-left:18px;margin:8px 0}
+.modal-box b{color:#ffe600}
+.modal-box .hl{color:#ff0055;font-weight:800}
+.close-m{
+  width:100%;margin-top:16px;padding:13px;border-radius:11px;border:0;
+  background:linear-gradient(90deg,#00f0ff,#ff0055);color:#04121a;font-weight:900;
+  font-family:inherit;font-size:13px;cursor:pointer;letter-spacing:.6px;
+}
+
+.toast{
+  position:fixed;left:50%;bottom:26px;transform:translate(-50%,24px);
+  background:linear-gradient(90deg,#00f0ff,#00ffa3);color:#04121a;
+  padding:12px 20px;border-radius:12px;font-weight:900;font-size:13px;
+  opacity:0;pointer-events:none;transition:.32s;z-index:300;
+  box-shadow:0 0 26px rgba(0,240,255,.65);max-width:88vw;text-align:center;
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="hd">
+    <div class="badge">⚡ OB55 · V5 · 2025 ⚡</div>
+    <h1>Độ nhạy OB55 FF V5<br>Thang điểm 200 chuẩn mới</h1>
+    <p>TỰ ĐỘNG TÍNH NÚT BẮN · CHUẨN HEADSHOT</p>
+  </div>
+
+  <div class="card">
+    <div class="lbl">Hệ điều hành <span class="num">BƯỚC 1</span></div>
+    <div class="os-grid">
+      <button type="button" class="os-btn" id="osIos" onclick="setOS('ios')">
+        <span class="ic">🍏</span> iOS (iPhone/iPad)
+      </button>
+      <button type="button" class="os-btn active" id="osAndroid" onclick="setOS('android')">
+        <span class="ic">🤖</span> Android
+      </button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="lbl">Dòng điện thoại <span class="num">BƯỚC 2</span></div>
+    <div class="search-wrap">
+      <div class="search-box">
+        <span class="mg">🔍</span>
+        <input id="phoneInput" type="text" autocomplete="off" spellcheck="false"
+               placeholder="VD: Redmi 15, iPhone 13, Samsung A55...">
+      </div>
+      <div class="sugg" id="sugg"></div>
+    </div>
+    <div class="selected" id="selectedBadge">✔ Đã chọn: <b id="selectedName"></b></div>
+  </div>
+
+  <div class="card">
+    <div class="lbl">Tình trạng đang gặp <span class="num">BƯỚC 3</span></div>
+    <div class="chips" id="chips">
+      <button type="button" class="chip" data-c="lodau">🎯 Lố Đầu</button>
+      <button type="button" class="chip" data-c="lacdan">💥 Lạc Đạn</button>
+      <button type="button" class="chip" data-c="giattam">🌀 Giật Tâm</button>
+      <button type="button" class="chip" data-c="nangtam">🏋️ Nặng Tâm</button>
+      <button type="button" class="chip" data-c="rungtay">🤳 Rung Tay</button>
+      <button type="button" class="chip" data-c="truatdich">👻 Trượt Địch</button>
+    </div>
+  </div>
+
+  <button type="button" class="main-btn" id="calcBtn" onclick="doCalculate()">🔥 TÌM ĐỘ NHẠY OB55 🔥</button>
+
+  <div id="results">
+    <div class="card" style="margin-top:13px">
+
+      <div class="dev-head">
+        <div class="nm" id="resName">—<small id="resSub">—</small></div>
+        <div class="os-pill" id="resOS">ANDROID</div>
+      </div>
+
+      <div id="sensList"></div>
+
+      <!-- ════════ FIRE BUTTON CARD ════════ -->
+      <div class="fire-card-wrap">
+        <div class="fire-card">
+          <div class="fire-card-inner">
+
+            <div class="fire-title">
+              <span class="fire-title-dot"></span>
+              Nút Bắn Tự Động · OB55
+            </div>
+
+            <!-- HUD + Size -->
+            <div class="fire-main">
+
+              <div class="hud">
+                <div class="hud-ring-a"></div>
+                <div class="hud-ring-b"></div>
+                <div class="hud-glow"></div>
+                <div class="hud-inner">
+                  <svg class="hud-cross" viewBox="0 0 100 100" aria-hidden="true">
+                    <line x1="50" y1="5"  x2="50" y2="18"/>
+                    <line x1="50" y1="82" x2="50" y2="95"/>
+                    <line x1="5"  y1="50" x2="18" y2="50"/>
+                    <line x1="82" y1="50" x2="95" y2="50"/>
+                  </svg>
+                  <div class="hud-val" id="hudVal">—</div>
+                  <div class="hud-unit">SIZE</div>
+                </div>
+              </div>
+
+              <div class="size-block">
+                <div class="size-lbl">KÍCH THƯỚC NÚT BẮN</div>
+                <div class="size-val" id="statSize">—</div>
+                <div class="size-qual" id="statQual">—</div>
+                <div class="size-note">Tự động theo máy · % màn hình</div>
+              </div>
+
+            </div>
+
+            <!-- ═══ VỊ TRÍ ĐẶT NÚT BẮN (cm) ═══ -->
+            <div class="pos-card">
+              <div class="pos-title">
+                <span class="pos-title-icon">📏</span>
+                VỊ TRÍ ĐẶT NÚT BẮN
+                <span class="pos-title-tag" id="posCategory">—</span>
+              </div>
+
+              <div class="pos-grid">
+                <div class="pos-item pos-item-bottom">
+                  <div class="pos-item-top">
+                    <span class="pos-item-icon">⬇</span>
+                    <span class="pos-item-label">CẠNH DƯỚI</span>
+                  </div>
+                  <div class="pos-item-val">
+                    <span class="pos-num" id="cmBottom">0.0</span>
+                    <span class="pos-unit">cm</span>
+                  </div>
+                  <div class="pos-item-sub">Từ mép dưới lên tâm nút</div>
+                </div>
+
+                <div class="pos-item pos-item-right">
+                  <div class="pos-item-top">
+                    <span class="pos-item-icon">➡</span>
+                    <span class="pos-item-label">CẠNH PHẢI</span>
+                  </div>
+                  <div class="pos-item-val">
+                    <span class="pos-num" id="cmRight">0.0</span>
+                    <span class="pos-unit">cm</span>
+                  </div>
+                  <div class="pos-item-sub">Từ mép phải vào tâm nút</div>
+                </div>
+              </div>
+
+              <!-- Mini ruler visual -->
+              <div class="pos-ruler" aria-hidden="true">
+                <div class="pos-ruler-label">CM</div>
+                <div class="tick major"></div>
+                <div class="tick"></div>
+                <div class="tick"></div>
+                <div class="tick"></div>
+                <div class="tick major"></div>
+                <div class="tick"></div>
+                <div class="tick"></div>
+                <div class="tick"></div>
+                <div class="tick major"></div>
+                <div class="tick"></div>
+                <div class="tick"></div>
+                <div class="tick"></div>
+                <div class="tick major"></div>
+                <div class="tick"></div>
+                <div class="tick"></div>
+                <div class="tick"></div>
+                <div class="tick major"></div>
+              </div>
+
+              <div class="pos-tip">
+                <span class="pos-tip-icon">🖐️</span>
+                <span>Dùng <b>thước kẻ thật</b> đo trực tiếp trên màn hình điện thoại — chỉnh chuẩn <b>100%</b> không cần đoán</span>
+              </div>
+            </div>
+
+            <!-- Hint -->
+            <div class="fire-hint" id="fireHint">
+              <span class="hint-arrow">⬆</span>
+              <span>Nút ngắm đặt cao hơn nút bắn <b>6–8%</b> để kéo tâm lên đầu</span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <!-- ════════ END FIRE CARD ════════ -->
+
+      <div class="info-grid">
+        <div class="info"><div class="k">DPI đề xuất</div><div class="v" id="resDPI">—</div></div>
+        <div class="info"><div class="k">Tốc độ con trỏ</div><div class="v" id="resPointer">—</div></div>
+      </div>
+
+      <button type="button" class="copy-btn" onclick="copyAll()">📋 SAO CHÉP THÔNG SỐ OB55</button>
+      <div class="link" onclick="openModal()"><span>📖 Xem công thức tinh chỉnh thủ công OB55</span></div>
+    </div>
+  </div>
+
+  <div class="foot">
+    Kết quả mang tính chất tham khảo · Hãy luyện tập thêm ở chế độ Huấn Luyện<br>
+    OB55 SENSITIVITY ENGINE v5.0 — 200 POINT SCALE
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box">
+    <h3>📖 Công thức tinh chỉnh thủ công OB55</h3>
+    <p>Bảng độ nhạy chuẩn OB55 dùng <b>thang điểm 200</b>. Vị trí nút bắn quy đổi sang cm dựa trên kích thước màn hình thực tế:</p>
+    <ul>
+      <li><b>Màn nhỏ</b> (iPhone 11–14, máy giá rẻ &lt;6.2"): cách đáy <b>1.2 – 1.5 cm</b>.</li>
+      <li><b>Màn lớn</b> (Redmi Note, A55, Pro Max, POCO ≥6.2"): cách đáy <b>1.5 – 1.8 cm</b>.</li>
+      <li><b>Tablet</b> (iPad Mini, iPad Air, Tab): cách đáy <b>2.2 – 2.8 cm</b>.</li>
+      <li><b>Lố Đầu</b> → <span class="hl">hạ nút xuống 0.2–0.3 cm</span> để kéo tâm dài hơn.</li>
+      <li><b>Nặng Tâm</b> → <span class="hl">đặt sát mép 1.0–1.2 cm</span> để có tối đa không gian vuốt lên.</li>
+      <li><b>Rung Tay</b> → nâng nút lên ~0.15 cm để giảm dao động tay.</li>
+    </ul>
+    <p><b>Quy trình đo bằng thước:</b></p>
+    <ul>
+      <li>Mở Free Fire → <b>Cài đặt → Điều khiển → Tùy chỉnh</b>.</li>
+      <li>Dùng thước kẻ đặt sát mép dưới màn hình, kéo lên tới tâm nút bắn → đọc số cm.</li>
+      <li>Tương tự đo từ mép phải vào tâm nút → đọc số cm thứ 2.</li>
+      <li>Chỉnh tới đúng 2 số cm app đưa ra — đây là vị trí ergonomic tối ưu cho ngón cái.</li>
+      <li>Nếu ngón cái phải <b>với</b> mới chạm nút → tăng size nút bắn 2% và đo lại.</li>
+    </ul>
+    <p style="color:#6f84a6;font-size:11.5px">* Kích thước màn hình được ước lượng từ đường chéo inch theo tỷ lệ khung hình chuẩn (20:9 cho điện thoại, 4:3 cho tablet).</p>
+    <button type="button" class="close-m" onclick="closeModal()">ĐÃ HIỂU</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+window.addEventListener('error', function(e){
+  try { toast('⚠️ Lỗi: ' + (e.message || 'không xác định')); } catch(_) {}
+});
+
+/* =======================================================
+   DATABASE THIẾT BỊ
+   ======================================================= */
+const RAW = [
+["iPhone 16 Pro Max","ios",4,6.9],["iPhone 16 Pro","ios",4,6.3],
+["iPhone 16 Plus","ios",4,6.7],["iPhone 16","ios",4,6.1],
+["iPhone 15 Pro Max","ios",4,6.7],["iPhone 15 Pro","ios",4,6.1],
+["iPhone 15 Plus","ios",4,6.7],["iPhone 15","ios",4,6.1],
+["iPhone 14 Pro Max","ios",4,6.7],["iPhone 14 Pro","ios",4,6.1],
+["iPhone 14 Plus","ios",4,6.7],["iPhone 14","ios",4,6.1],
+["iPhone 13 Pro Max","ios",4,6.7],["iPhone 13 Pro","ios",4,6.1],
+["iPhone 13","ios",4,6.1],["iPhone 13 mini","ios",4,5.4],
+["iPhone 12 Pro Max","ios",4,6.7],["iPhone 12 Pro","ios",4,6.1],
+["iPhone 12","ios",4,6.1],["iPhone 12 mini","ios",4,5.4],
+["iPhone 11 Pro Max","ios",3,6.5],["iPhone 11 Pro","ios",3,5.8],
+["iPhone 11","ios",3,6.1],["iPhone XS Max","ios",3,6.5],
+["iPhone XS","ios",3,5.8],["iPhone XR","ios",3,6.1],
+["iPhone X","ios",3,5.8],["iPhone SE 2022","ios",3,4.7],
+["iPhone SE 2020","ios",2,4.7],["iPhone 8 Plus","ios",2,5.5],
+["iPhone 8","ios",2,4.7],["iPhone 7 Plus","ios",2,5.5],
+["iPhone 7","ios",2,4.7],
+["iPad Pro 12.9","ios",4,12.9],["iPad Pro 11","ios",4,11],
+["iPad Air 5","ios",4,10.9],["iPad Air 4","ios",3,10.9],
+["iPad Mini 6","ios",4,8.3],["iPad 10.2","ios",3,10.2],
+["iPad 9th Gen","ios",3,10.2],
+
+["Samsung S24 Ultra","android",4,6.8],["Samsung S24+","android",4,6.7],
+["Samsung S24","android",4,6.2],["Samsung S23 Ultra","android",4,6.8],
+["Samsung S23+","android",4,6.6],["Samsung S23","android",4,6.1],
+["Samsung S22 Ultra","android",4,6.8],["Samsung S22","android",4,6.1],
+["Samsung S21 FE","android",3,6.4],["Samsung S21 Ultra","android",4,6.8],
+["Samsung S20 FE","android",3,6.5],["Samsung Note 20 Ultra","android",4,6.9],
+["Samsung A55","android",3,6.6],["Samsung A54","android",3,6.4],
+["Samsung A35","android",2,6.6],["Samsung A34","android",2,6.6],
+["Samsung A25","android",2,6.5],["Samsung A24","android",2,6.5],
+["Samsung A15","android",1,6.5],["Samsung A14","android",1,6.6],
+["Samsung A05","android",1,6.7],["Samsung A05s","android",1,6.7],
+["Samsung A73","android",3,6.7],["Samsung A53","android",2,6.5],
+["Samsung A52","android",2,6.5],["Samsung A32","android",2,6.4],
+["Samsung A12","android",1,6.5],["Samsung M35","android",2,6.6],
+["Samsung M15","android",1,6.5],["Samsung M14","android",1,6.6],
+["Samsung F14","android",1,6.6],["Samsung A23","android",1,6.6],
+
+["Xiaomi 14 Ultra","android",4,6.73],["Xiaomi 14","android",4,6.36],
+["Xiaomi 13T Pro","android",4,6.67],["Xiaomi 13","android",4,6.36],
+["Xiaomi 12","android",4,6.28],["Xiaomi 12X","android",3,6.28],
+["Redmi Note 13 Pro","android",3,6.67],["Redmi Note 13","android",2,6.67],
+["Redmi Note 12","android",2,6.67],["Redmi Note 11","android",2,6.43],
+["Redmi Note 10","android",2,6.43],["Redmi 15","android",2,6.9],
+["Redmi 15C","android",1,6.9],["Redmi 14C","android",1,6.88],
+["Redmi 13C","android",1,6.74],["Redmi 12","android",1,6.79],
+["Redmi 10","android",1,6.5],["Redmi 9A","android",1,6.53],
+["Redmi 9C","android",1,6.53],["Redmi A3","android",1,6.71],
+["Redmi A2","android",1,6.52],
+["POCO F6 Pro","android",4,6.67],["POCO F6","android",4,6.67],
+["POCO F5","android",4,6.67],["POCO X6 Pro","android",3,6.67],
+["POCO X6","android",3,6.67],["POCO X5 Pro","android",3,6.67],
+["POCO M6 Pro","android",2,6.79],["POCO M5","android",1,6.58],
+["POCO C65","android",1,6.74],["POCO C55","android",1,6.71],
+
+["Oppo Reno 12","android",3,6.7],["Oppo Reno 11","android",3,6.7],
+["Oppo Reno 10","android",3,6.7],["Oppo Reno 8","android",3,6.4],
+["Oppo Reno 8T","android",2,6.7],["Oppo A78","android",2,6.56],
+["Oppo A58","android",1,6.72],["Oppo A38","android",1,6.56],
+["Oppo A18","android",1,6.56],["Oppo A17","android",1,6.56],
+["Oppo A16","android",1,6.52],["Oppo Find X6 Pro","android",4,6.82],
+["Oppo Find X5 Pro","android",4,6.7],["Oppo F25 Pro","android",2,6.7],
+
+["Vivo V29","android",3,6.78],["Vivo V27","android",3,6.78],
+["Vivo V25","android",3,6.44],["Vivo Y36","android",1,6.64],
+["Vivo Y27","android",1,6.64],["Vivo Y17s","android",1,6.56],
+["Vivo Y16","android",1,6.51],["Vivo X100 Pro","android",4,6.78],
+["Vivo X90 Pro","android",4,6.78],["iQOO Neo 9","android",4,6.78],
+["iQOO Z9","android",3,6.78],["iQOO Z7","android",2,6.64],
+
+["Realme 12 Pro","android",3,6.7],["Realme 11 Pro","android",3,6.7],
+["Realme 11","android",2,6.4],["Realme C67","android",1,6.72],
+["Realme C55","android",1,6.72],["Realme C53","android",1,6.74],
+["Realme Narzo 60","android",2,6.43],["Realme GT Neo 5","android",4,6.74],
+["Realme GT 6","android",4,6.78],
+
+["OnePlus 12","android",4,6.82],["OnePlus 11","android",4,6.7],
+["OnePlus Nord 3","android",3,6.74],["OnePlus Nord CE 3","android",2,6.7],
+["OnePlus 10 Pro","android",4,6.7],["OnePlus Nord 2T","android",3,6.43],
+
+["Asus ROG Phone 8","android",4,6.78],["Asus ROG Phone 7","android",4,6.78],
+["Asus ROG Phone 6","android",4,6.78],["Tecno Pova 6 Pro","android",2,6.78],
+["Tecno Spark 20","android",1,6.6],["Tecno Camon 30","android",2,6.78],
+["Infinix Note 40","android",2,6.78],["Infinix Hot 40","android",1,6.78],
+["Infinix Zero 30","android",2,6.78],["Infinix GT 10 Pro","android",3,6.67],
+["Huawei Nova 12","android",3,6.7],["Huawei P60 Pro","android",4,6.67],
+["Nokia G42","android",1,6.56],["Vsmart Joy 4","android",1,6.53],
+["Itel P55","android",1,6.6],["Motorola Edge 50 Pro","android",3,6.7],
+["Motorola G84","android",2,6.55],["Nothing Phone 2","android",4,6.7],
+["Nubia Red Magic 9 Pro","android",4,6.8],["Honor X9b","android",2,6.78],
+["Honor 90","android",3,6.7],["Google Pixel 8 Pro","android",4,6.7],
+["Google Pixel 8","android",4,6.2],["Google Pixel 7a","android",3,6.1]
+];
+const DB = RAW.map(a => ({ n:a[0], os:a[1], t:a[2], s:a[3] }));
+
+const state = { os:'android', device:null, conds:new Set(), result:null };
+
+const BASE = {
+  1:{look:186, red:176, x2:166, x4:150, sniper:112, free:166},
+  2:{look:178, red:168, x2:158, x4:142, sniper:102, free:158},
+  3:{look:170, red:160, x2:150, x4:134, sniper: 94, free:150},
+  4:{look:163, red:153, x2:143, x4:127, sniper: 86, free:143}
+};
+
+const KEYS = [
+  ['look',  'Nhìn xung quanh'],
+  ['red',   'Ống ngắm hồng tâm'],
+  ['x2',    'Ống ngắm 2x'],
+  ['x4',    'Ống ngắm 4x'],
+  ['sniper','Ống ngắm súng ngắm'],
+  ['free',  'Nút camera tự do']
+];
+
+const CONDS = {
+  lodau:     {look:-8,  red:-9,  x2:-9,  x4:-10, sniper:-6, free:-6,  btn:+5, name:'Lố Đầu'},
+  lacdan:    {look:+4,  red:+7,  x2:+7,  x4:+6,  sniper:+3, free:+4,  btn:+1, name:'Lạc Đạn'},
+  giattam:   {look:+9,  red:+6,  x2:+6,  x4:+5,  sniper:+3, free:+7,  btn:-1, name:'Giật Tâm'},
+  nangtam:   {look:+13, red:+11, x2:+11, x4:+10, sniper:+7, free:+11, btn:-6, name:'Nặng Tâm'},
+  rungtay:   {look:-6,  red:-7,  x2:-7,  x4:-6,  sniper:-5, free:-5,  btn:+4, name:'Rung Tay'},
+  truatdich: {look:+6,  red:+4,  x2:+4,  x4:+3,  sniper:+2, free:+6,  btn:-2, name:'Trượt Địch'}
+};
+
+const $ = id => document.getElementById(id);
+const clamp = (v,a,b) => Math.min(b, Math.max(a, v));
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+function toast(msg){
+  const t = $('toast'); if(!t) return;
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(t._tid);
+  t._tid = setTimeout(()=>t.classList.remove('show'), 2200);
+}
+
+function estimateDevice(name){
+  const s = name.toLowerCase();
+  let t = 2, size = 6.5;
+  if(/ultra|pro max|rog phone|find x|red magic|oneplus 1[2-9]|xiaomi 1[3-9]|s2[2-9] ultra|pixel [7-9] pro|x100|gt neo|gt 6/.test(s)) t = 4;
+  else if(/\bpro\b|plus|\bnote 1[2-9]\b|poco f|reno|edge|nova|honor 9|\bs2[1-9]\b|\bs23\b/.test(s)) t = 3;
+  else if(/lite|\bgo\b|\ba0\d\b|\bc\d\d\b|spark|hot \d+|\by1\d\b|\by2\d\b|\ba1\d\b|\bm1\d\b/.test(s)) t = 1;
+  if(/ipad|tab/.test(s)) size = 11;
+  else if(/max|ultra/.test(s)) size = 6.8;
+  else if(/plus/.test(s)) size = 6.7;
+  else if(/mini|\bse\b/.test(s)) size = 5.4;
+  else if(/\bpro\b/.test(s)) size = 6.3;
+  return { t, s:size };
+}
+
+function setOS(os){
+  state.os = os;
+  $('osIos').classList.toggle('active', os === 'ios');
+  $('osAndroid').classList.toggle('active', os === 'android');
+  if(state.device && state.device.custom){ state.device.os = os; updateBadge(); }
+}
+
+let input = null, sugg = null;
+
+function initSearch(){
+  input = $('phoneInput'); sugg = $('sugg');
+  if(!input || !sugg) return;
+
+  input.addEventListener('input', renderSugg);
+  input.addEventListener('focus', renderSugg);
+  input.addEventListener('keydown', e => {
+    if(e.key === 'Enter'){ e.preventDefault(); sugg.classList.remove('show'); doCalculate(); }
+  });
+  document.addEventListener('click', e => {
+    if(!e.target.closest('.search-wrap')) sugg.classList.remove('show');
+  });
+  sugg.addEventListener('click', e => {
+    const item = e.target.closest('.item'); if(!item) return;
+    if(item.dataset.custom){
+      const nm = input.value.trim(); if(!nm) return;
+      const est = estimateDevice(nm);
+      state.device = { n:nm, os:state.os, t:est.t, s:est.s, custom:true };
+      input.value = nm;
+    } else {
+      const nm = item.dataset.name;
+      const d = DB.find(x => x.n === nm); if(!d) return;
+      state.device = { ...d, custom:false };
+      input.value = d.n; setOS(d.os);
+    }
+    sugg.classList.remove('show'); updateBadge();
+  });
+}
+
+function renderSugg(){
+  if(!input || !sugg) return;
+  const q = input.value.trim().toLowerCase();
+  if(!q){ sugg.classList.remove('show'); sugg.innerHTML=''; return; }
+  const matches = DB.filter(d => d.n.toLowerCase().includes(q)).slice(0, 8);
+  let html = matches.map(d =>
+    `<div class="item" data-name="${esc(d.n)}">
+       <span>${esc(d.n)}</span>
+       <span class="tag">${d.os === 'ios' ? 'iOS' : 'ANDROID'}</span>
+     </div>`).join('');
+  const exact = DB.some(d => d.n.toLowerCase() === q);
+  if(!exact){
+    html += `<div class="item custom" data-custom="1">
+               <span>+ Tính toán cho máy "${esc(input.value.trim())}"</span>
+               <span class="tag">TỰ TẠO</span>
+             </div>`;
+  }
+  sugg.innerHTML = html; sugg.classList.add('show');
+}
+
+function updateBadge(){
+  const b = $('selectedBadge'), n = $('selectedName');
+  if(!b || !n) return;
+  if(state.device){
+    n.textContent = state.device.n + ' · ' + (state.device.os === 'ios' ? 'iOS' : 'Android')
+                  + (state.device.custom ? ' (tự tạo)' : '');
+    b.classList.add('show');
+  } else b.classList.remove('show');
+}
+
+function initChips(){
+  const wrap = $('chips'); if(!wrap) return;
+  wrap.addEventListener('click', e => {
+    const c = e.target.closest('.chip'); if(!c) return;
+    const key = c.dataset.c;
+    if(state.conds.has(key)){ state.conds.delete(key); c.classList.remove('active'); }
+    else { state.conds.add(key); c.classList.add('active'); }
+  });
+}
+
+/* =======================================================
+   CORE CALCULATION
+   ======================================================= */
+function calcSensitivity(dev, conds){
+  const tier = dev.t, size = dev.s, os = dev.os;
+  const v = { ...BASE[tier] || BASE[2] };
+
+  if(os === 'ios'){ for(const k in v) v[k] *= 0.96; }
+
+  let sizeAdj = 0;
+  if(size >= 10) sizeAdj = -6;
+  else if(size >= 7) sizeAdj = -4;
+  else if(size >= 6.7) sizeAdj = -2;
+  else if(size <= 5.5) sizeAdj = +4;
+  else if(size <= 6.1) sizeAdj = +1;
+  for(const k in v) v[k] += sizeAdj;
+
+  conds.forEach(c => {
+    const m = CONDS[c]; if(!m) return;
+    for(const k in v) v[k] += m[k];
+  });
+
+  for(const k in v) v[k] = clamp(Math.round(v[k]), 0, 200);
+
+  let btn = 46;
+  if(os === 'ios')       btn -= 1;
+  if(size >= 6.7)        btn -= 2;
+  else if(size <= 6.1)   btn += 2;
+  if(tier === 1)         btn += 2;
+  else if(tier === 4)    btn -= 1;
+  conds.forEach(c => { const m = CONDS[c]; if(m) btn += m.btn; });
+  btn = clamp(Math.round(btn), 36, 58);
+
+  // Vị trí % (giữ để tương thích ngược với code cũ)
+  let mr = 13 + (btn - 46) * 0.5;
+  let mb = 11 + (btn - 46) * 0.4;
+  mr = clamp(Math.round(mr), 8, 19);
+  mb = clamp(Math.round(mb), 7, 17);
+
+  let dpi;
+  if(os === 'ios') dpi = 'Mặc định';
+  else {
+    const dpiBase = {1:380, 2:420, 3:460, 4:500}[tier] || 420;
+    dpi = Math.round(dpiBase + (size - 6.4) * 8);
+    if(conds.has('rungtay')) dpi -= 10;
+  }
+
+  let pointer;
+  if(tier >= 3 && !conds.has('rungtay')) pointer = 'Max (Cao nhất)';
+  else if(tier >= 3) pointer = 'Fast (Nhanh)';
+  else if(tier === 2) pointer = 'Fast (Nhanh)';
+  else pointer = 'Fast / Trung bình cao';
+
+  return { v, btn, mr, mb, dpi, pointer, sizeAdj };
+}
+
+/* =======================================================
+   ✨ CM POSITION CALCULATOR ✨
+   ======================================================= */
+function computeCmPosition(dev, conds, btnPct){
+  const size = dev.s;
+  const os = dev.os;
+  const tier = dev.t;
+
+  /* ===== CẠNH DƯỚI (bottom edge) ===== */
+  let bottomCm;
+  let category;
+
+  if (size >= 7.5) {
+    // TABLET / iPAD: 2.2 – 2.8 cm
+    category = 'tablet';
+    const t = clamp((size - 7.5) / 5.5, 0, 1);
+    bottomCm = 2.2 + t * 0.6;
+  } else if (size >= 6.2) {
+    // MÀN LỚN: 1.5 – 1.8 cm
+    category = 'large';
+    const t = clamp((size - 6.2) / 1.3, 0, 1);
+    bottomCm = 1.5 + t * 0.3;
+  } else {
+    // MÀN NHỎ: 1.2 – 1.5 cm
+    category = 'small';
+    const t = clamp((size - 5.4) / 0.8, 0, 1);
+    bottomCm = 1.2 + t * 0.3;
+  }
+
+  // Điều chỉnh theo tình trạng
+  if (conds.has('lodau')) {
+    // Hạ nút xuống 0.2 – 0.3 cm → kéo tâm dài hơn
+    bottomCm -= 0.25;
+  }
+  if (conds.has('nangtam')) {
+    // Đặt sát mép 1.0 – 1.2 cm (tablet scale nhẹ để không quá sát)
+    if (category === 'tablet') bottomCm = Math.min(bottomCm, 1.5);
+    else                       bottomCm = Math.min(bottomCm, 1.15);
+  }
+  if (conds.has('rungtay')) {
+    // Nâng nhẹ để giảm dao động tay
+    bottomCm += 0.15;
+  }
+  if (conds.has('truatdich')) {
+    bottomCm += 0.08;
+  }
+
+  // Clamp theo category
+  if (category === 'tablet')      bottomCm = clamp(bottomCm, 1.4, 2.8);
+  else if (category === 'large')  bottomCm = clamp(bottomCm, 0.9, 1.9);
+  else                            bottomCm = clamp(bottomCm, 0.9, 1.6);
+
+  /* ===== CẠNH PHẢI (right edge) ===== */
+  // Tính chiều rộng màn hình vật lý (cm) từ đường chéo inch
+  let widthCm;
+  if (category === 'tablet') {
+    // Tablet 4:3
+    widthCm = size * 2.54 / Math.sqrt(1 + Math.pow(4/3, 2));
+  } else {
+    // Điện thoại 20:9
+    widthCm = size * 2.54 / Math.sqrt(1 + Math.pow(20/9, 2));
+  }
+
+  let rightCm;
+  if (category === 'tablet')      rightCm = widthCm * 0.13;  // tablet ~2.1 cm
+  else if (category === 'large')  rightCm = widthCm * 0.16;  // màn lớn ~1.1 cm
+  else                            rightCm = widthCm * 0.17;  // màn nhỏ ~1.05 cm
+
+  // Điều chỉnh theo size nút (nút lớn → sát mép hơn)
+  rightCm -= ((btnPct - 46) / 100) * 0.5;
+
+  // iOS dịch nhẹ
+  if (os === 'ios') rightCm -= 0.05;
+
+  rightCm = clamp(rightCm, 0.6, 4.0);
+
+  // Nhãn category
+  let categoryLabel;
+  if (category === 'tablet')      categoryLabel = '💻 TABLET · ' + size + '"';
+  else if (category === 'large')  categoryLabel = '📱 MÀN LỚN · ' + size + '"';
+  else                            categoryLabel = '📱 MÀN NHỎ · ' + size + '"';
+
+  return {
+    bottomCm: Math.round(bottomCm * 10) / 10,
+    rightCm:  Math.round(rightCm * 10) / 10,
+    widthCm:  Math.round(widthCm * 10) / 10,
+    category,
+    categoryLabel
+  };
+}
+
+/* =======================================================
+   ANIMATE SỐ CM (count-up)
+   ======================================================= */
+function animateCmValue(el, target){
+  if(!el) return;
+  const duration = 700;
+  const startTime = performance.now();
+  function step(now){
+    const elapsed = now - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    el.textContent = (target * eased).toFixed(1);
+    if(progress < 1) requestAnimationFrame(step);
+    else el.textContent = target.toFixed(1);
+  }
+  requestAnimationFrame(step);
+}
+
+/* =======================================================
+   RESOLVE DEVICE
+   ======================================================= */
+function resolveDeviceFromInput(){
+  const txt = input ? input.value.trim() : '';
+  if(!txt) return null;
+  const d = DB.find(x => x.n.toLowerCase() === txt.toLowerCase());
+  if(d) return { ...d, custom:false };
+  const est = estimateDevice(txt);
+  return { n:txt, os:state.os, t:est.t, s:est.s, custom:true };
+}
+
+/* =======================================================
+   MAIN ACTION
+   ======================================================= */
+function doCalculate(){
+  try {
+    if(!state.device){
+      const dev = resolveDeviceFromInput();
+      if(dev){ state.device = dev; updateBadge(); }
+    }
+    if(!state.device){
+      toast('⚠️ Vui lòng nhập hoặc chọn dòng máy!');
+      if(input) input.focus();
+      return;
+    }
+
+    const r = calcSensitivity(state.device, state.conds);
+    // Tính vị trí cm
+    const pos = computeCmPosition(state.device, state.conds, r.btn);
+    r.pos = pos;
+    state.result = r;
+
+    /* Header */
+    const resName = $('resName');
+    if(resName){
+      resName.innerHTML = esc(state.device.n)
+        + '<small id="resSub">TIER ' + state.device.t + ' · MÀN HÌNH ' + state.device.s + '&quot;</small>';
+    }
+    const resOS = $('resOS');
+    if(resOS) resOS.textContent = state.device.os === 'ios' ? 'iOS' : 'ANDROID';
+
+    /* Sensitivity list */
+    const list = $('sensList');
+    if(list){
+      list.innerHTML = KEYS.map(([k, label]) => {
+        const val = r.v[k];
+        const pct = (val / 200 * 100).toFixed(1);
+        return `<div class="sens">
+          <div class="top"><span>${label}</span><b>${val}</b></div>
+          <div class="bar"><i data-w="${pct}"></i></div>
+        </div>`;
+      }).join('');
+    }
+
+    /* Fire button - size */
+    const hudVal = $('hudVal');
+    if(hudVal) hudVal.textContent = r.btn + '%';
+
+    const statSize = $('statSize');
+    if(statSize) statSize.textContent = r.btn + '%';
+
+    const statQual = $('statQual');
+    if(statQual){
+      let qual;
+      if(r.btn < 42)       qual = 'Nhỏ · Nhanh tay';
+      else if(r.btn <= 46) qual = 'Vừa tay · Cân bằng';
+      else if(r.btn <= 50) qual = 'Hơi lớn · Chắc tay';
+      else                 qual = 'Lớn · Dễ chạm';
+      statQual.textContent = qual;
+    }
+
+    /* ✨ VỊ TRÍ CM ✨ */
+    const posCat = $('posCategory');
+    if(posCat) posCat.textContent = pos.categoryLabel;
+
+    // Animate numbers
+    animateCmValue($('cmBottom'), pos.bottomCm);
+    animateCmValue($('cmRight'),  pos.rightCm);
+
+    /* Hint bar */
+    const fireHint = $('fireHint');
+    if(fireHint){
+      const tips = [];
+      if(state.conds.has('nangtam'))
+        tips.push('Nặng Tâm → đã đặt nút <b>sát mép dưới</b> để tối đa hành trình vuốt tâm');
+      if(state.conds.has('lodau'))
+        tips.push('Lố Đầu → đã <b>hạ nút xuống 0.25 cm</b> giúp kéo tâm dài &amp; chắc hơn');
+      if(state.conds.has('rungtay'))
+        tips.push('Rung Tay → đã <b>nâng nút 0.15 cm</b> để giảm dao động tay');
+      if(state.conds.has('giattam'))
+        tips.push('Giật Tâm → <b>camera tự do</b> đã được đẩy cao');
+      if(state.conds.has('truatdich'))
+        tips.push('Trượt Địch → <b>nhìn xung quanh</b> tăng để bám mục tiêu');
+
+      if(tips.length > 0){
+        fireHint.innerHTML = '<span class="hint-arrow">💡</span><span>' + tips.join('<br>') + '</span>';
+      } else {
+        fireHint.innerHTML = '<span class="hint-arrow">⬆</span><span>Nút ngắm đặt cao hơn nút bắn <b>6–8%</b> để kéo tâm lên đầu</span>';
+      }
+    }
+
+    /* Hardware info */
+    const resDPI = $('resDPI');
+    if(resDPI) resDPI.textContent = state.device.os === 'ios' ? 'Mặc định (iOS)' : r.dpi;
+    const resPointer = $('resPointer');
+    if(resPointer) resPointer.textContent = r.pointer;
+
+    /* Show results */
+    const res = $('results');
+    if(res){
+      res.classList.add('show');
+      res.style.display = 'block';
+    }
+
+    /* Animate bars */
+    setTimeout(() => {
+      if(!list) return;
+      list.querySelectorAll('.bar i').forEach(el => {
+        el.style.width = el.dataset.w + '%';
+      });
+    }, 80);
+
+    /* Scroll */
+    setTimeout(() => {
+      if(res && res.scrollIntoView){
+        try { res.scrollIntoView({ behavior:'smooth', block:'start' }); }
+        catch(_){ res.scrollIntoView(); }
+      }
+    }, 120);
+
+    if(sugg) sugg.classList.remove('show');
+
+  } catch(err){
+    console.error('doCalculate error:', err);
+    toast('⚠️ Có lỗi xảy ra: ' + (err && err.message ? err.message : 'không xác định'));
+  }
+}
+
+/* =======================================================
+   COPY
+   ======================================================= */
+function buildText(){
+  const d = state.device, r = state.result, p = r.pos;
+  const condsTxt = [...state.conds].map(c => CONDS[c].name).join(', ') || 'Không có';
+
+  let txt = '';
+  txt += '🔥 ĐỘ NHẠY OB55 FREE FIRE - THANG 200 🔥\n';
+  txt += '━━━━━━━━━━━━━━━━━━━━\n';
+  txt += '📱 Máy: ' + d.n + '\n';
+  txt += '💻 Hệ điều hành: ' + (d.os === 'ios' ? 'iOS' : 'Android') + '\n';
+  txt += '🎯 Tình trạng: ' + condsTxt + '\n';
+  txt += '━━━━━━━━━━━━━━━━━━━━\n';
+  txt += '⚙️ BẢNG ĐỘ NHẠY (0-200)\n';
+  KEYS.forEach(([k, label]) => { txt += '• ' + label + ': ' + r.v[k] + '\n'; });
+  txt += '━━━━━━━━━━━━━━━━━━━━\n';
+  txt += '🎮 NÚT BẮN\n';
+  txt += '• Kích thước nút: ' + r.btn + '%\n';
+  txt += '• 📏 VỊ TRÍ ĐẶT CHUẨN (đo bằng thước kẻ):\n';
+  txt += '   - Cách CẠNH DƯỚI lên tâm nút: ' + p.bottomCm.toFixed(1) + ' cm\n';
+  txt += '   - Cách CẠNH PHẢI vào tâm nút: ' + p.rightCm.toFixed(1) + ' cm\n';
+  txt += '   - Vị trí: góc dưới bên phải màn hình\n';
+  txt += '• Nút ngắm đặt cao hơn nút bắn 6-8%\n';
+  txt += '━━━━━━━━━━━━━━━━━━━━\n';
+  txt += '🖥️ DPI: ' + (d.os === 'ios' ? 'Mặc định (iOS)' : r.dpi) + '\n';
+  txt += '🖱️ Tốc độ con trỏ: ' + r.pointer + '\n';
+  txt += '━━━━━━━━━━━━━━━━━━━━\n';
+  txt += '⚡ OB55 SENSITIVITY ENGINE v5.0';
+  return txt;
+}
+
+function copyAll(){
+  if(!state.result){ toast('⚠️ Hãy bấm TÌM ĐỘ NHẠY trước!'); return; }
+  const text = buildText();
+  const done = () => toast('✅ Đã sao chép thông số OB55!');
+
+  const fallback = () => {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0;pointer-events:none';
+    document.body.appendChild(ta);
+    ta.focus(); ta.select();
+    try { document.execCommand('copy'); done(); }
+    catch(e){ toast('❌ Trình duyệt không cho phép copy'); }
+    document.body.removeChild(ta);
+  };
+
+  if(navigator.clipboard && window.isSecureContext){
+    navigator.clipboard.writeText(text).then(done).catch(fallback);
+  } else fallback();
+}
+
+/* MODAL */
+function openModal(){ const m = $('modal'); if(m) m.classList.add('show'); }
+function closeModal(){ const m = $('modal'); if(m) m.classList.remove('show'); }
+
+/* INIT */
+function init(){ initSearch(); initChips(); setOS('android'); }
+document.addEventListener('DOMContentLoaded', init);
+if(document.readyState !== 'loading') init();
+</script>
+</body>
+</html>
